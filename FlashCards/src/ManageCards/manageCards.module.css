@@ -1,0 +1,144 @@
+.card_display {
+  width: 400px;
+  border-radius: 10px;
+  height: 72vh;
+  background-color: #484848;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  font-size: 10px;
+  justify-content: start;
+  align-items: center;
+  box-shadow: 10px 10px 20px black;
+}
+
+.title {
+  font-size: 1.7rem;
+  margin: 10px 0px 0px;
+  color: white;
+}
+
+.stats {
+  margin: 0px;
+}
+
+.App_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.topic_container {
+  display: flex;
+  width: 95%;
+  height: auto;
+  justify-content: space-between;
+  background-color: white;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0px 6px;
+  border-radius: 10px;
+}
+
+.Link {
+  display: flex;
+  text-decoration: none;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  width: inherit;
+  height: 50px;
+}
+
+.align_display {
+  display: flex;
+  justify-content: space-around;
+  width: 90%;
+  align-items: center;
+}
+
+.align_display_btns {
+  display: flex;
+  justify-content: space-between;
+  width: 65%;
+  align-items: center;
+  align-self: start;
+}
+
+.manageBtns_arrange {
+  display: flex;
+  justify-content: space-around;
+  width: 390px;
+}
+
+.Label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.8rem;
+  width: 100%;
+  padding: 10px;
+}
+
+.Inputs {
+  width: 97%;
+}
+
+.Textarea {
+  height: auto;
+  min-height: 120px;
+}
+
+.next_prev_btn {
+  background-color: black;
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+  border: none;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  border-radius: 100%;
+}
+
+.next_prev_btn:hover {
+  background-color: #484848;
+}
+
+.manageBtns {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  background-color: black;
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  border: none;
+  color: white;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  border-radius: 10px;
+}
+
+.manageBtns:hover {
+  background-color: #484848;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.returnBtn {
+  margin-left: 30px;
+}
+
+.arrow_display {
+  height: 50px;
+  width: 50px;
+}

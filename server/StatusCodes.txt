@@ -1,0 +1,75 @@
+✅ SUCCESS (2xx)
+200 OK — Request successful
+201 Created — Resource created (POST)
+204 No Content — Success, no response body (DELETE)
+
+⚠️ CLIENT ERRORS (4xx)
+400 Bad Request — Invalid or missing data
+401 Unauthorized — Not authenticated (login required)
+403 Forbidden — No permission
+404 Not Found — Resource does not exist
+409 Conflict — Duplicate resource / already exists
+422 Unprocessable Entity — Validation failed
+
+💥 SERVER ERRORS (5xx)
+500 Internal Server Error — Server crashed / unknown error
+502 Bad Gateway — Upstream service failed
+503 Service Unavailable — Server temporarily unavailable
+
+
+==============================
+EXPRESS CRUD STATUS CHEAT SHEET
+==============================
+
+📥 GET (Read Data)
+-------------------
+Success:
+200 OK
+
+Not found:
+404 Not Found
+
+Server error:
+500 Internal Server Error
+
+
+➕ POST (Create Data)
+---------------------
+Success (created):
+201 Created
+
+Bad input:
+400 Bad Request
+
+Duplicate data:
+409 Conflict
+
+Server error:
+500 Internal Server Error
+
+
+✏️ PUT / PATCH (Update Data)
+-----------------------------
+Success:
+200 OK
+
+Resource not found:
+404 Not Found
+
+Invalid data:
+400 Bad Request
+
+Server error:
+500 Internal Server Error
+
+
+🗑 DELETE (Remove Data)
+-----------------------
+Success (no response body):
+204 No Content
+
+Resource not found:
+404 Not Found
+
+Server error:
+500 Internal Server Error

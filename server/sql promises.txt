@@ -1,0 +1,11 @@
+######## RESULTS FROM A SQL QUERY ########
+
+ResultSetHeader {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 7,
+  info: '',
+  serverStatus: 2,
+  warningStatus: 0,
+  changedRows: 0
+}

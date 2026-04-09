@@ -1,0 +1,15 @@
+body {
+  margin: 0px;
+  font-family: "Poppins";
+  font-weight: 100;
+  background-image: url("C:\Users\ThinkPad E480\OneDrive\Desktop\Coding\React Practice\FlashCards complete\FlashCards\src\assets\education-6936596.jpg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: repeat;
+}
+
+button {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
