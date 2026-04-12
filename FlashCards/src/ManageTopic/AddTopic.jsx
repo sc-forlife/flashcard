@@ -6,14 +6,7 @@ import css from "../ManageCards/manageCards.module.css";
 import NavBar from "../NavBar/NavBar";
 import { userCards } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHome,
-  faFileCircleXmark,
-  faFilePen,
-  faCircleArrowLeft,
-  faCircleArrowRight,
-  faFileCirclePlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faFileCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function AddTopic() {
   const PORT = useContext(userCards);

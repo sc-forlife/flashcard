@@ -1,6 +1,6 @@
 //This file has been logic checked and commented
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import css from "./manageCards.module.css";
 import NavBar from "../NavBar/NavBar";
 import { useContext } from "react";
@@ -9,10 +9,10 @@ import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
-  faUser,
   faFileCirclePlus,
   faDeleteLeft,
 } from "@fortawesome/free-solid-svg-icons";
+
 export default function AddCard() {
   const [answer, setAnswer] = useState("");
   const [question, setQuestion] = useState("");

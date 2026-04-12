@@ -8,7 +8,6 @@ import { userCards } from "../App";
 import NavBar from "../NavBar/NavBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHome,
   faFolderOpen,
   faCircleArrowRight,
   faCircleArrowLeft,

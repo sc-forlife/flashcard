@@ -2,26 +2,25 @@
 
 import css from "./NavBar.module.css";
 import { Link } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
-
-//when a button is clicked it should hold the color to indicate which part of the app user is in
+import { useState, useEffect } from "react";
 
 function NavBar(props) {
-  const [isActive, setIsActive] = useState(true);
   const [cardsColor, setCardsColor] = useState("black");
   const [manageTopicColor, setManageTopicColor] = useState("black");
   const [reviseCardsColor, setReviseCardsColor] = useState("black");
   const [StatsColor, setStatsColor] = useState("black");
 
   useEffect(() => {
+    //Add Color to the selected buttons in the Nav
+    const color = "rgba(0, 173, 173, 0.817)";
     if (props.btnName === "/Cards") {
-      setCardsColor("rgba(0, 173, 173, 0.817)");
+      setCardsColor(color);
     } else if (props.btnName === "/ManageTopic") {
-      setManageTopicColor("rgba(0, 173, 173, 0.817)");
+      setManageTopicColor(color);
     } else if (props.btnName === "/ReviseCards") {
-      setReviseCardsColor("rgba(0, 173, 173, 0.817)");
+      setReviseCardsColor(color);
     } else if (props.btnName === "/Stats") {
-      setStatsColor("rgba(0, 173, 173, 0.817)");
+      setStatsColor(color);
     }
   }, []);
 

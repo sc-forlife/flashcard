@@ -10,9 +10,6 @@ import {
   faHome,
   faFileCircleXmark,
   faFilePen,
-  faCircleArrowLeft,
-  faCircleArrowRight,
-  faFileCirclePlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function EditCard() {

@@ -1,6 +1,6 @@
 //This file has been logic checked and commented
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import css from "./manageCards.module.css";
 import { useContext } from "react";
 import { userCards } from "../App";

@@ -6,14 +6,7 @@ import { useState, useEffect, useContext } from "react";
 import { userCards } from "../App";
 import NavBar from "../NavBar/NavBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHome,
-  faFileCircleXmark,
-  faFilePen,
-  faCircleArrowLeft,
-  faCircleArrowRight,
-  faFileCirclePlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faFilePen } from "@fortawesome/free-solid-svg-icons";
 
 export default function EditTopic() {
   const PORT = useContext(userCards);

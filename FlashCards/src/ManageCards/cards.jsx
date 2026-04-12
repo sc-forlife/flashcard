@@ -7,7 +7,6 @@ import { userCards } from "../App";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
 
 export default function Home() {
   const PORT = useContext(userCards);
