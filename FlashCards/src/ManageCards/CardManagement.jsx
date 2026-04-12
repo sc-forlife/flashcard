@@ -8,7 +8,7 @@ import Nav from "../NavBar/NavBar";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHome,
+  faFolderOpen,
   faFileCircleXmark,
   faFilePen,
   faCircleArrowLeft,
@@ -134,10 +134,13 @@ export default function CardManagement() {
                 </button>
               </div>
               <div className={css.align_display_btns}>
-                <Link to={"/"} className={css.link}>
-                  <button className={`${css.manageBtns} ${css.returnBtn}`}>
-                    Home
-                    <FontAwesomeIcon icon={faHome} />
+                <Link to={"/Cards"} className={css.link}>
+                  <button
+                    className={`${css.returnBtn} ${css.manageBtns}`}
+                    style={{ width: "140px" }}
+                  >
+                    Change topic
+                    <FontAwesomeIcon icon={faFolderOpen} />
                   </button>
                 </Link>
                 <div className={css.manageBtns_arrange}>
