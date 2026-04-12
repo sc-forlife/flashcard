@@ -6,6 +6,13 @@ import { Link, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { userCards } from "../App";
 import NavBar from "../NavBar/NavBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHome,
+  faFolderOpen,
+  faCircleArrowRight,
+  faCircleArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function StatsCard() {
   const PORT = useContext(userCards);
@@ -63,7 +70,10 @@ export default function StatsCard() {
           <>
             <div className={css.align_display}>
               <button className={css.next_prev_btn} onClick={handlePrevious}>
-                Previous
+                <FontAwesomeIcon
+                  className={css.arrow_display}
+                  icon={faCircleArrowLeft}
+                />
               </button>
               <div className={css.card_display}>
                 <h1 style={{ color: "white" }} className={css.title}>
@@ -87,12 +97,21 @@ export default function StatsCard() {
                 </div>
               </div>
               <button className={css.next_prev_btn} onClick={handleNext}>
-                Next
+                <FontAwesomeIcon
+                  className={css.arrow_display}
+                  icon={faCircleArrowRight}
+                />
               </button>
             </div>
             <div className={css.align_display}>
               <Link to={"/Stats"} className={css.link}>
-                <button className={css.manageBtns}>Back</button>
+                <button
+                  className={`${css.returnBtn} ${css.manageBtns}`}
+                  style={{ width: "140px" }}
+                >
+                  Change topic
+                  <FontAwesomeIcon icon={faFolderOpen} />
+                </button>
               </Link>
             </div>
           </>

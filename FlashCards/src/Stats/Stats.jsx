@@ -5,6 +5,8 @@ import css from "../ManageCards/manageCards.module.css";
 import Nav from "../NavBar/NavBar";
 import { userCards } from "../App";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 export default function Stats() {
   const PORT = useContext(userCards);
@@ -59,7 +61,9 @@ export default function Stats() {
           })}
         </div>
         <Link to={"/"} className={css.link}>
-          <button className={css.manageBtns}>Home</button>
+          <button className={css.manageBtns}>
+            Home <FontAwesomeIcon icon={faHome} />
+          </button>
         </Link>
       </div>
     </>

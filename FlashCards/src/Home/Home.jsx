@@ -12,7 +12,7 @@ export default function home() {
       >
         <NavBar />
         <div className={cssHome.centerDiv}>
-          <h1 className={cssHome.welcomeHome}>Welcome to the flashcard</h1>
+          <h1 className={cssHome.welcomeHome}>Welcome to the Flashcard App</h1>
         </div>
       </div>
     </>

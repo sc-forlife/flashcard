@@ -8,13 +8,9 @@ import Nav from "../NavBar/NavBar";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHome,
-  faFileCircleXmark,
-  faFilePen,
   faCircleArrowLeft,
   faCircleArrowRight,
   faBookOpen,
-  faFileCirclePlus,
   faFolderOpen,
   faArrowRotateRight,
   faCircleCheck,
