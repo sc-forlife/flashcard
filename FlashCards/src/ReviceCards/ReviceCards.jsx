@@ -6,14 +6,7 @@ import Nav from "../NavBar/NavBar";
 import { userCards } from "../App";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHome,
-  faFileCircleXmark,
-  faFilePen,
-  faCircleArrowLeft,
-  faCircleArrowRight,
-  faFileCirclePlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 export default function ReviceCards() {
   const PORT = useContext(userCards);

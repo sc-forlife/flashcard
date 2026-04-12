@@ -6,6 +6,20 @@ import { useContext } from "react";
 import { userCards } from "../App";
 import Nav from "../NavBar/NavBar";
 import { Link, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHome,
+  faFileCircleXmark,
+  faFilePen,
+  faCircleArrowLeft,
+  faCircleArrowRight,
+  faBookOpen,
+  faFileCirclePlus,
+  faFolderOpen,
+  faArrowRotateRight,
+  faCircleCheck,
+  faCircleXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function CardManagement() {
   const cardId = useParams(); //object {topicId,index}
@@ -142,7 +156,10 @@ export default function CardManagement() {
             <>
               <div className={css.align_display}>
                 <button className={css.next_prev_btn} onClick={handlePrevious}>
-                  Previous
+                  <FontAwesomeIcon
+                    className={css.arrow_display}
+                    icon={faCircleArrowLeft}
+                  />
                 </button>
                 <div className={css.card_display}>
                   <h1 style={{ color: "white" }}>Card {displayCards.cardId}</h1>
@@ -150,12 +167,21 @@ export default function CardManagement() {
                   <h2 style={{ color: "white" }}>Check Back in 5 minute</h2>
                 </div>
                 <button className={css.next_prev_btn} onClick={handleNext}>
-                  Next
+                  <FontAwesomeIcon
+                    className={css.arrow_display}
+                    icon={faCircleArrowRight}
+                  />
                 </button>
               </div>
               <div className={css.align_display}>
                 <Link to={"/ReviceCards"} className={css.link}>
-                  <button className={css.manageBtns}>Change topic</button>
+                  <button
+                    className={`${css.returnBtn} ${css.manageBtns}`}
+                    style={{ width: "140px" }}
+                  >
+                    Change topic
+                    <FontAwesomeIcon icon={faFolderOpen} />
+                  </button>
                 </Link>
               </div>
             </>
@@ -163,7 +189,10 @@ export default function CardManagement() {
             <>
               <div className={css.align_display}>
                 <button className={css.next_prev_btn} onClick={handlePrevious}>
-                  Previous
+                  <FontAwesomeIcon
+                    className={css.arrow_display}
+                    icon={faCircleArrowLeft}
+                  />
                 </button>
                 <div className={css.card_display}>
                   <h1 style={{ color: "white" }}>Card {displayCards.cardId}</h1>
@@ -175,21 +204,30 @@ export default function CardManagement() {
                   </div>
                 </div>
                 <button className={css.next_prev_btn} onClick={handleNext}>
-                  Next
+                  <FontAwesomeIcon
+                    className={css.arrow_display}
+                    icon={faCircleArrowRight}
+                  />
                 </button>
               </div>
               <div className={css.align_display_btns}>
                 <Link to={"/ReviceCards"} className={css.link}>
-                  <button className={`${css.returnBtn} ${css.manageBtns}`}>
+                  <button
+                    className={`${css.returnBtn} ${css.manageBtns}`}
+                    style={{ width: "140px" }}
+                  >
                     Change topic
+                    <FontAwesomeIcon icon={faFolderOpen} />
                   </button>
                 </Link>
                 <div className={css.manageBtns_arrange}>
                   <button
                     className={css.manageBtns}
+                    style={{ width: "140px" }}
                     onClick={() => handleShowAnswer(displayCards.cardId)}
                   >
                     Show Answer
+                    <FontAwesomeIcon icon={faBookOpen} />
                   </button>
                 </div>
               </div>
@@ -207,25 +245,32 @@ export default function CardManagement() {
             </div>
             <div className={css.align_display_btns}>
               <Link to={`/ReviceCards`} className={css.link}>
-                <button className={`${css.manageBtns} ${css.returnBtn}`}>
-                  Quit
+                <button
+                  className={`${css.returnBtn} ${css.manageBtns}`}
+                  style={{ width: "140px" }}
+                >
+                  Change topic
+                  <FontAwesomeIcon icon={faFolderOpen} />
                 </button>
               </Link>
               <div className={css.manageBtns_arrange}>
                 <button className={css.manageBtns} onClick={tryAgain}>
                   Try Again
+                  <FontAwesomeIcon icon={faArrowRotateRight} />
                 </button>
                 <button
                   className={css.manageBtns}
                   onClick={() => handleGood(displayCards.cardId)}
                 >
                   Good
+                  <FontAwesomeIcon icon={faCircleCheck} />
                 </button>
                 <button
                   className={css.manageBtns}
                   onClick={() => handleBad(displayCards)}
                 >
                   Bad
+                  <FontAwesomeIcon icon={faCircleXmark} />
                 </button>
               </div>
             </div>
