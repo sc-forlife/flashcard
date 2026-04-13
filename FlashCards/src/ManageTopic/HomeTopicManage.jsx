@@ -15,12 +15,18 @@ import {
   faFileCirclePlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import Alert from "../alert/alert";
+import { useRef } from "react";
 
 export default function HomeTopicManage() {
   const PORT = useContext(userCards);
   const [topics, setTopics] = useState([{}]);
   const [index, setIndex] = useState(0);
+  const [isShowAlert, setIsShowAlert] = useState(false);
+  const [isShowDeleteAlert, setIsShowDeleteAlert] = useState(false);
   let displayTopics = topics[index];
+  let alertMessage = useRef("");
+  let answer = useRef(null);
 
   const getTopics = async () => {
     try {
@@ -42,25 +48,22 @@ export default function HomeTopicManage() {
     if (index < topics.length - 1) {
       setIndex((i) => i + 1);
     } else {
-      alert("Last card reached");
+      setIsShowAlert(true);
+      alertMessage.current = "Last topic has been reached";
     }
   };
 
   const handlePrevious = () => {
     index > topics.length - topics.length
       ? setIndex((i) => i - 1)
-      : alert("First card reached");
+      : setIsShowAlert(true);
+    alertMessage.current = "Last topic has been reached";
   };
 
   const handleDelete = (id) => {
     //delete the card from the database
 
-    const answer = prompt(
-      "You are about to delete the Topic with all its related cards , Would you like to proceed",
-    )
-      .toLowerCase()
-      .toString();
-    if (answer !== "yes") {
+    if (answer.current === false) {
       return null;
     }
     (async () => {
@@ -75,7 +78,7 @@ export default function HomeTopicManage() {
         if (response.ok) {
           const responseData = await response.json();
           getTopics();
-          alert(responseData.message);
+          //Missing alert
         }
       } catch (err) {
         console.error(err, "Someting Went Wrong");
@@ -87,6 +90,29 @@ export default function HomeTopicManage() {
     <>
       <div className={css.App_container}>
         <NavBar btnName="/ManageTopic" />
+        {isShowAlert ? (
+          <Alert
+            message={alertMessage.current}
+            isInformation={true}
+            close={() => {
+              setIsShowAlert(false);
+            }}
+          />
+        ) : null}
+        {isShowDeleteAlert ? (
+          <Alert
+            message={"Are you sure , You want to delete"}
+            isQuestion={true}
+            returnTrue={() => {
+              answer.current = true;
+              setIsShowAlert(false);
+            }}
+            returnFalse={() => {
+              answer.current = false;
+              setIsShowAlert(false);
+            }}
+          />
+        ) : null}
         {/* prevent rendering undefined data */}
         {topics.length ? (
           <>

@@ -1,12 +1,13 @@
 //This file has been logic checked and commented
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import css from "./manageCards.module.css";
 import { useContext } from "react";
 import { userCards } from "../App";
 import Nav from "../NavBar/NavBar";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Alert from "../alert/alert";
 import {
   faFolderOpen,
   faFileCircleXmark,
@@ -22,7 +23,9 @@ export default function CardManagement() {
   const [hasCards, setHasCards] = useState(false);
   const [index, setIndex] = useState(0);
   const [cards, setCards] = useState([{}]);
+  const [isShowAlert, setIsShowAlert] = useState(false);
   let displayCard = cards[index];
+  let alertMessage = useRef("");
 
   const getCards = async () => {
     try {
@@ -56,7 +59,8 @@ export default function CardManagement() {
     if (index < cards.length - 1) {
       setIndex((i) => i + 1);
     } else {
-      alert("Last card reached");
+      setIsShowAlert(true);
+      alertMessage.current = "Last card has been reached";
     }
   };
 
@@ -65,7 +69,8 @@ export default function CardManagement() {
     if (index > cards.length - cards.length) {
       setIndex((i) => i - 1);
     } else {
-      alert("First card reached");
+      setIsShowAlert(true);
+      alertMessage.current = "First card has been reached";
     }
   };
 
@@ -105,6 +110,15 @@ export default function CardManagement() {
     <>
       <div className={css.App_container}>
         <Nav btnName="/Cards" />
+        {isShowAlert ? (
+          <Alert
+            message={alertMessage.current}
+            isWarning={true}
+            close={() => {
+              setIsShowAlert(false);
+            }}
+          />
+        ) : null}
         {/* Check if the database has cardData */}
         {hasCards ? (
           // Check if displayCard has cardData

@@ -5,7 +5,6 @@ import Alert from "../alert/alert";
 import { useState } from "react";
 
 export default function home() {
-  const [isShowAlert, setIsShowAlert] = useState(false);
   return (
     <>
       <div
@@ -13,17 +12,9 @@ export default function home() {
         className={css.App_container}
       >
         <NavBar />
-        {isShowAlert ? (
-          <Alert
-            close={() => setIsShowAlert(false)}
-            message={"How are you"}
-            isQuestion={true}
-          />
-        ) : null}
         <div className={cssHome.centerDiv}>
           <h1 className={cssHome.welcomeHome}>Welcome to the Flashcard App</h1>
         </div>
-        <button onClick={() => setIsShowAlert(true)}>alert</button>
       </div>
     </>
   );
