@@ -26,7 +26,9 @@ export default function alert({
             className={css.iconSize}
             icon={faTriangleExclamation}
           />
-          <button onClick={close}>close</button>
+          <button className={css.alertButton} onClick={close}>
+            close
+          </button>
         </div>
       ) : isQuestion ? (
         <div className={css.alertContainer}>

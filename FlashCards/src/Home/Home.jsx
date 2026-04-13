@@ -13,7 +13,9 @@ export default function home() {
         className={css.App_container}
       >
         <NavBar />
-        {isShowAlert ? <Alert close={() => setIsShowAlert(false)} /> : null}
+        {isShowAlert ? (
+          <Alert close={() => setIsShowAlert(false)} message={"How are you"} />
+        ) : null}
         <div className={cssHome.centerDiv}>
           <h1 className={cssHome.welcomeHome}>Welcome to the Flashcard App</h1>
         </div>
