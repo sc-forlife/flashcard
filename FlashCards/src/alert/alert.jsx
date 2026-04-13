@@ -12,20 +12,21 @@ import {
 export default function alert({
   message = "Hello World",
   close = function () {},
+  isWarning = false,
+  isQuestion = false,
+  isInformation = false,
 }) {
-  const [isWarning, setIsWarning] = useState(true);
-  const [isQuestion, setIsQuestion] = useState(false);
-  const [isInformation, setIsInformation] = useState(false);
-
   return (
     <>
       {isWarning ? (
         <div className={css.alertContainer}>
-          <h1>{message}</h1>
-          <FontAwesomeIcon
-            className={css.iconSize}
-            icon={faTriangleExclamation}
-          />
+          <div>
+            <h1>{message}</h1>
+            <FontAwesomeIcon
+              className={css.iconSize}
+              icon={faTriangleExclamation}
+            />
+          </div>
           <button className={css.alertButton} onClick={close}>
             close
           </button>
