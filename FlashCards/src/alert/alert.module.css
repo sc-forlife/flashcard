@@ -1,0 +1,17 @@
+.alertContainer {
+  background-color: rgb(12, 0, 56);
+  width: 450px;
+  height: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+  color: white;
+  font-size: 0.7rem;
+}
+
+.iconSize {
+  width: 40px;
+  height: 40px;
+}
