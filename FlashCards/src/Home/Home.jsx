@@ -2,8 +2,10 @@ import css from "../ManageCards/manageCards.module.css";
 import cssHome from "./home.module.css";
 import NavBar from "../NavBar/NavBar";
 import Alert from "../alert/alert";
+import { useState } from "react";
 
 export default function home() {
+  const [isShowAlert, setIsShowAlert] = useState(false);
   return (
     <>
       <div
@@ -11,10 +13,11 @@ export default function home() {
         className={css.App_container}
       >
         <NavBar />
-        <Alert />
+        {isShowAlert ? <Alert close={() => setIsShowAlert(false)} /> : null}
         <div className={cssHome.centerDiv}>
           <h1 className={cssHome.welcomeHome}>Welcome to the Flashcard App</h1>
         </div>
+        <button onClick={() => setIsShowAlert(true)}>alert</button>
       </div>
     </>
   );

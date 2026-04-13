@@ -9,8 +9,11 @@ import {
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function alert({ message = "Hello World" }) {
-  const [isWarning, setIsWarning] = useState(false);
+export default function alert({
+  message = "Hello World",
+  close = function () {},
+}) {
+  const [isWarning, setIsWarning] = useState(true);
   const [isQuestion, setIsQuestion] = useState(false);
   const [isInformation, setIsInformation] = useState(false);
 
@@ -23,6 +26,7 @@ export default function alert({ message = "Hello World" }) {
             className={css.iconSize}
             icon={faTriangleExclamation}
           />
+          <button onClick={close}>close</button>
         </div>
       ) : isQuestion ? (
         <div className={css.alertContainer}>
