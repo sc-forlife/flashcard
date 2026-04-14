@@ -1,6 +1,6 @@
 //This file has been logic checked and commented
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import css from "./manageCards.module.css";
 import NavBar from "../NavBar/NavBar";
 import { useContext } from "react";
@@ -12,12 +12,15 @@ import {
   faFileCirclePlus,
   faDeleteLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import Alert from "../alert/alert";
 
 export default function AddCard() {
   const [answer, setAnswer] = useState("");
   const [question, setQuestion] = useState("");
+  const [isShowAlert, setIsShowAlert] = useState(false);
   const PORT = useContext(userCards);
   const topicId = useParams(); //object {id}
+  let alertMessage = useRef("");
 
   const handleQuestion = (e) => {
     setQuestion((q) => (q = e.target.value));
@@ -44,7 +47,8 @@ export default function AddCard() {
           const responseData = await response.json();
 
           //alert user response
-          alert(responseData.message);
+          alertMessage.current = responseData.message;
+          setIsShowAlert(true);
 
           handleClear();
         }
@@ -63,6 +67,15 @@ export default function AddCard() {
     <>
       <div className={css.App_container}>
         <NavBar btnName="/Cards" />
+        {isShowAlert ? (
+          <Alert
+            message={alertMessage.current}
+            close={() => {
+              setIsShowAlert(false);
+            }}
+            isInformation={true}
+          />
+        ) : null}
         <form onSubmit={handleAdd} id="addForm">
           <div className={css.card_display}>
             <h1 className={css.title}>Add Card</h1>

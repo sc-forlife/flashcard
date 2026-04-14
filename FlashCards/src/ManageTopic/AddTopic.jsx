@@ -1,16 +1,19 @@
 //This file has been logic checked and commented
 
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import css from "../ManageCards/manageCards.module.css";
 import NavBar from "../NavBar/NavBar";
 import { userCards } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faFileCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import Alert from "../alert/alert";
 
 export default function AddTopic() {
   const PORT = useContext(userCards);
   const [topicName, setTopicName] = useState("");
+  const [isShowAlert, setIsShowAlert] = useState(false);
+  let alertMessage = useRef("");
 
   const handleQuestion = (e) => {
     setTopicName((t) => (t = e.target.value));
@@ -29,7 +32,9 @@ export default function AddTopic() {
 
         if (response.ok) {
           const responseData = await response.json();
-          alert(responseData.message);
+          // alert(responseData.message);
+          alertMessage.current = responseData.message;
+          setIsShowAlert(true);
           setTopicName("");
         }
       } catch (err) {
@@ -42,6 +47,15 @@ export default function AddTopic() {
     <>
       <div className={css.App_container}>
         <NavBar btnName="/ManageTopic" />
+        {isShowAlert ? (
+          <Alert
+            message={alertMessage.current}
+            close={() => {
+              setIsShowAlert(false);
+            }}
+            isInformation={true}
+          />
+        ) : null}
         <div className={css.align_display}>
           <form onSubmit={handleAddTopic} id="addTopicForm">
             <div className={css.card_display}>

@@ -24,6 +24,7 @@ export default function CardManagement() {
   const [index, setIndex] = useState(0);
   const [cards, setCards] = useState([{}]);
   const [isShowAlert, setIsShowAlert] = useState(false);
+  const [isShowDeleteAlert, setIsShowDeleteAlert] = useState(false);
   let displayCard = cards[index];
   let alertMessage = useRef("");
 
@@ -76,15 +77,6 @@ export default function CardManagement() {
 
   const handleDelete = (id) => {
     //delete the card from the database
-
-    const answer = prompt(`Are you want to delete card ${id}`)
-      .toLowerCase()
-      .toString();
-
-    //if user does not say yes , stop function
-    if (answer !== "yes") {
-      return null;
-    }
     (async () => {
       try {
         const response = await fetch(
@@ -98,7 +90,17 @@ export default function CardManagement() {
         if (response.ok) {
           const responseData = await response.json();
           getCards();
-          alert(responseData.message);
+
+          //alert popup
+          alertMessage.current = responseData.messgae;
+          setIsShowAlert(true);
+          console.log(responseData.message);
+
+          //prevent undefined display from deleting last card
+          index > cards.length - cards.length ? setIndex((i) => i - 1) : null;
+
+          //removeQuestion Popup
+          setIsShowDeleteAlert(false);
         }
       } catch (err) {
         console.error(err, "Something Went Wrong");
@@ -116,6 +118,21 @@ export default function CardManagement() {
             isWarning={true}
             close={() => {
               setIsShowAlert(false);
+            }}
+          />
+        ) : null}
+        {/* Are you sure Delete ? , alert pop up */}
+        {isShowDeleteAlert ? (
+          <Alert
+            message={"Are you sure , You want to delete"}
+            isQuestion={true}
+            returnTrue={() => {
+              //Yes , calls handleDelete function
+              handleDelete(displayCard.cardId);
+            }}
+            returnFalse={() => {
+              //No , Removes Popup
+              setIsShowDeleteAlert(false);
             }}
           />
         ) : null}
@@ -176,7 +193,7 @@ export default function CardManagement() {
                   </Link>
                   <button
                     className={css.manageBtns}
-                    onClick={() => handleDelete(displayCard.cardId)}
+                    onClick={() => setIsShowDeleteAlert(true)}
                   >
                     Delete
                     <FontAwesomeIcon icon={faFileCircleXmark} />

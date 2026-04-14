@@ -100,6 +100,7 @@ export default function HomeTopicManage() {
             }}
           />
         ) : null}
+        {/* Are you sure Delete ? , alert pop up */}
         {isShowDeleteAlert ? (
           <Alert
             message={"Are you sure , You want to delete"}
