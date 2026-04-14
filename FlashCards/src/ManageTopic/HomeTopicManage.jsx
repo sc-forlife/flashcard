@@ -26,7 +26,6 @@ export default function HomeTopicManage() {
   const [isShowDeleteAlert, setIsShowDeleteAlert] = useState(false);
   let displayTopics = topics[index];
   let alertMessage = useRef("");
-  let answer = useRef(null);
 
   const getTopics = async () => {
     try {
@@ -62,23 +61,25 @@ export default function HomeTopicManage() {
 
   const handleDelete = (id) => {
     //delete the card from the database
-
-    if (answer.current === false) {
-      return null;
-    }
     (async () => {
       try {
-        const response = await fetch(
-          `${PORT.current}/topics/manageTopics/${id}`,
-          {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-          },
-        );
+        const response = await fetch(`${PORT}/topics/manageTopics/${id}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
         if (response.ok) {
           const responseData = await response.json();
           getTopics();
-          //Missing alert
+
+          //alert popup
+          setIsShowAlert(true);
+          alertMessage.current = responseData.message;
+
+          //prevent undefined display from deleting last card
+          index > topics.length - topics.length ? setIndex((i) => i - 1) : null;
+
+          //removeQuestion Popup
+          setIsShowDeleteAlert(false);
         }
       } catch (err) {
         console.error(err, "Someting Went Wrong");
@@ -104,12 +105,12 @@ export default function HomeTopicManage() {
             message={"Are you sure , You want to delete"}
             isQuestion={true}
             returnTrue={() => {
-              answer.current = true;
-              setIsShowAlert(false);
+              //Yes , calls handleDelete function
+              handleDelete(displayTopics.topicId);
             }}
             returnFalse={() => {
-              answer.current = false;
-              setIsShowAlert(false);
+              //No , Removes Popup
+              setIsShowDeleteAlert(false);
             }}
           />
         ) : null}
@@ -161,7 +162,7 @@ export default function HomeTopicManage() {
                 </Link>
                 <button
                   className={css.manageBtns}
-                  onClick={() => handleDelete(displayTopics.topicId)}
+                  onClick={() => setIsShowDeleteAlert(true)}
                 >
                   Delete
                   <FontAwesomeIcon icon={faFileCircleXmark} />
@@ -177,13 +178,21 @@ export default function HomeTopicManage() {
                 <p>There no topics avalaible , Please Add topics</p>
               </div>
             </div>
-            <div className={css.align_display}>
-              <Link to={"/"}>
-                <button>Home</button>
+            <div className={css.align_display_btns}>
+              <Link to={"/"} className={css.Link}>
+                <button className={`${css.returnBtn} ${css.manageBtns}`}>
+                  Home
+                  <FontAwesomeIcon icon={faHome} />
+                </button>
               </Link>
-              <Link to={`/AddTopic`}>
-                <button>Add Topic</button>
-              </Link>
+              <div className={css.manageBtns_arrange}>
+                <Link className={css.link} to={`/AddTopic`}>
+                  <button className={css.manageBtns}>
+                    Add
+                    <FontAwesomeIcon icon={faFileCirclePlus} />
+                  </button>
+                </Link>
+              </div>
             </div>
           </>
         )}

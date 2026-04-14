@@ -54,7 +54,7 @@ router
       const [results] = await db.query("DELETE FROM cards WHERE topicId = ?", [
         req.topicId,
       ]);
-      if (results.affectedRows) {
+      if (results.affectedRows >= 0) {
         const [results] = await db.query(
           "DELETE FROM topics WHERE topicId = ?",
           [req.topicId],
