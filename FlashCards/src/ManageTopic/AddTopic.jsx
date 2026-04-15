@@ -32,7 +32,6 @@ export default function AddTopic() {
 
         if (response.ok) {
           const responseData = await response.json();
-          // alert(responseData.message);
           alertMessage.current = responseData.message;
           setIsShowAlert(true);
           setTopicName("");

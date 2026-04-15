@@ -1,6 +1,6 @@
 //This file has been logic checked and commented
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import css from "./manageCards.module.css";
 import NavBar from "../NavBar/NavBar";
 import { useParams, Link } from "react-router-dom";
@@ -11,12 +11,15 @@ import {
   faFileCircleXmark,
   faFilePen,
 } from "@fortawesome/free-solid-svg-icons";
+import Alert from "../alert/alert";
 
 export default function EditCard() {
   const PORT = useContext(userCards);
   const cardId = useParams(); //object {id , topicId}
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const [isShowAlert, setIsShowAlert] = useState(false);
+  let alertMessage = useRef("");
 
   const getCards = async () => {
     try {
@@ -67,7 +70,8 @@ export default function EditCard() {
         );
         if (response.ok) {
           const responseData = await response.json();
-          alert(responseData.message);
+          setIsShowAlert(true);
+          alertMessage.current = responseData.message;
         }
       } catch (err) {
         console.error(err, "Something Went Wrong");
@@ -79,6 +83,13 @@ export default function EditCard() {
     <>
       <div className={css.App_container}>
         <NavBar btnName="/Cards" />
+        {isShowAlert ? (
+          <Alert
+            message={alertMessage.current}
+            isInformation={true}
+            close={() => setIsShowAlert(false)}
+          />
+        ) : null}
         <form onSubmit={handleEdit} id="editCard">
           <div className={css.card_display}>
             <h1 className={css.title}>Edit Card</h1>

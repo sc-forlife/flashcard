@@ -25,8 +25,10 @@ export default function CardManagement() {
   const [cards, setCards] = useState([{}]);
   const [isShowAlert, setIsShowAlert] = useState(false);
   const [isShowDeleteAlert, setIsShowDeleteAlert] = useState(false);
+  const [isShowInformationAlert, setIsShowInformationAlert] = useState(false);
   let displayCard = cards[index];
   let alertMessage = useRef("");
+  let informationAlertMessage = useRef("");
 
   const getCards = async () => {
     try {
@@ -92,8 +94,8 @@ export default function CardManagement() {
           getCards();
 
           //alert popup
-          alertMessage.current = responseData.messgae;
-          setIsShowAlert(true);
+          informationAlertMessage.current = responseData.message;
+          setIsShowInformationAlert(true);
           console.log(responseData.message);
 
           //prevent undefined display from deleting last card
@@ -118,6 +120,15 @@ export default function CardManagement() {
             isWarning={true}
             close={() => {
               setIsShowAlert(false);
+            }}
+          />
+        ) : null}
+        {isShowInformationAlert ? (
+          <Alert
+            message={informationAlertMessage.current}
+            isInformation={true}
+            close={() => {
+              setIsShowInformationAlert(false);
             }}
           />
         ) : null}
