@@ -1,16 +1,19 @@
 //This file has been logic checked and commented
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import css from "../ManageCards/manageCards.module.css";
 import Nav from "../NavBar/NavBar";
 import { userCards } from "../App";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import Alert from "../alert/alert";
 
 export default function ReviceCards() {
   const PORT = useContext(userCards);
   const [topics, setTopic] = useState([{}]);
+  const [isShowAlert, setIsShowAlert] = useState(false);
+  let alertMessage = useRef("");
 
   const getCards = async () => {
     try {
@@ -32,7 +35,16 @@ export default function ReviceCards() {
     <>
       <div className={css.App_container}>
         <Nav btnName="/ReviseCards" />
-        <div className={css.card_display}>
+        {isShowAlert ? (
+          <Alert
+            message={alertMessage.current}
+            isWarning={true}
+            close={() => {
+              setIsShowAlert(false);
+            }}
+          />
+        ) : null}
+        <div className={css.card_display} style={{ overflowY: "scroll" }}>
           <h2 className={css.title}>Select topic to revise</h2>
           {topics.map((topic) => {
             //Prevent mapping JSX to escape the unique key prop error
@@ -51,7 +63,10 @@ export default function ReviceCards() {
               </div>
             ) : (
               <div
-                onClick={() => alert(`${topic.topic} has no accessible cards`)}
+                onClick={() => {
+                  alertMessage.current = `${topic.topic} has no accessible cards`;
+                  setIsShowAlert(true);
+                }}
                 className={css.topic_container}
                 key={topic.topicId}
               >

@@ -12,6 +12,15 @@
   box-shadow: 10px 10px 20px black;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
 .title {
   font-size: 1.7rem;
   margin: 10px 0px 0px;

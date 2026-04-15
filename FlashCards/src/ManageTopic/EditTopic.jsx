@@ -2,16 +2,19 @@
 
 import { Link, useParams } from "react-router-dom";
 import css from "../ManageCards/manageCards.module.css";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { userCards } from "../App";
 import NavBar from "../NavBar/NavBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faFilePen } from "@fortawesome/free-solid-svg-icons";
+import Alert from "../alert/alert";
 
 export default function EditTopic() {
   const PORT = useContext(userCards);
   const topicId = useParams(); //object {id}
   const [topic, setTopic] = useState("");
+  const [isShowAlert, setIsShowAlert] = useState(false);
+  let alertMessage = useRef("");
 
   const getEdiTopic = async () => {
     try {
@@ -51,7 +54,8 @@ export default function EditTopic() {
         if (response.ok) {
           const responseData = await response.json();
           setTopic("");
-          alert(responseData.message);
+          alertMessage.current = responseData.message;
+          setIsShowAlert(true);
         }
       } catch (err) {
         console.error(err, "Something went wrong");
@@ -63,6 +67,15 @@ export default function EditTopic() {
     <>
       <div className={css.App_container}>
         <NavBar btnName="/ManageTopic" />
+        {isShowAlert ? (
+          <Alert
+            message={alertMessage.current}
+            close={() => {
+              setIsShowAlert(false);
+            }}
+            isInformation={true}
+          />
+        ) : null}
         <div className={css.align_display}>
           <form onSubmit={handleTopicEdit} id="editForm">
             <div className={css.card_display}>

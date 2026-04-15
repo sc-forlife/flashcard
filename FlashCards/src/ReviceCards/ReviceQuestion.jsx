@@ -16,6 +16,7 @@ import {
   faCircleCheck,
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import Alert from "../alert/alert";
 
 export default function CardManagement() {
   const cardId = useParams(); //object {topicId,index}
@@ -24,7 +25,11 @@ export default function CardManagement() {
   const [isQuestion, setIsQuestion] = useState(true);
   const [dbCards, setDbCards] = useState([{}]);
   const [isCoolDown, setIsCoolDown] = useState(true);
+  const [isShowInformationAlert, setIsShowInformationAlert] = useState("");
+  const [isShowWarningAlert, setIsShowWarningAlert] = useState("");
   const timerCard = useRef([]);
+  let informationAlertMessage = useRef("");
+  let warningAlertMessage = useRef("");
   let card = [...dbCards];
   let displayCards = card[index];
 
@@ -54,7 +59,8 @@ export default function CardManagement() {
       );
       if (response.ok) {
         const responseData = await response.json();
-        alert(responseData.message);
+        informationAlertMessage.current = responseData.message;
+        setIsShowInformationAlert(true);
       }
     } catch (err) {
       console.error(err, "Something Went Wrong");
@@ -87,7 +93,8 @@ export default function CardManagement() {
     if (index < card.length - 1) {
       setIndex((i) => i + 1);
     } else {
-      alert("Last card reached");
+      setIsShowWarningAlert(true);
+      warningAlertMessage.current = "Last topic has been reached";
     }
   };
 
@@ -95,7 +102,8 @@ export default function CardManagement() {
     if (index > 0) {
       setIndex((i) => i - 1);
     } else {
-      alert("First card reached");
+      setIsShowWarningAlert(true);
+      warningAlertMessage.current = "First topic has been reached";
     }
   };
 
@@ -130,7 +138,10 @@ export default function CardManagement() {
   const handleBadCards = (displayCard) => {
     timerCard.current = setTimeout(() => {
       displayCard.isBad = false;
-      alert(`Card ${displayCard.cardId}: Cooldown complete !`);
+
+      //alert popup
+      informationAlertMessage.current = `Card ${displayCard.cardId}: Cooldown complete !`;
+      setIsShowInformationAlert(true);
 
       //force re-render
       setIsCoolDown((n) => {
@@ -143,6 +154,25 @@ export default function CardManagement() {
     <>
       <div className={css.App_container}>
         <Nav btnName="/ReviseCards" />
+
+        {/* information pop */}
+        {isShowInformationAlert ? (
+          <Alert
+            message={informationAlertMessage.current}
+            isInformation={true}
+            close={() => setIsShowInformationAlert(false)}
+          />
+        ) : null}
+
+        {/* warning pop */}
+        {isShowWarningAlert ? (
+          <Alert
+            message={warningAlertMessage.current}
+            isWarning={true}
+            close={() => setIsShowWarningAlert(false)}
+          />
+        ) : null}
+
         {/* force re-render */}
         {isCoolDown ? null : null}
 

@@ -15,12 +15,17 @@ import {
   faFileCirclePlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import Alert from "../alert/alert";
+import { useRef } from "react";
 
 export default function HomeTopicManage() {
   const PORT = useContext(userCards);
   const [topics, setTopics] = useState([{}]);
   const [index, setIndex] = useState(0);
+  const [isShowAlert, setIsShowAlert] = useState(false);
+  const [isShowDeleteAlert, setIsShowDeleteAlert] = useState(false);
   let displayTopics = topics[index];
+  let alertMessage = useRef("");
 
   const getTopics = async () => {
     try {
@@ -42,40 +47,39 @@ export default function HomeTopicManage() {
     if (index < topics.length - 1) {
       setIndex((i) => i + 1);
     } else {
-      alert("Last card reached");
+      setIsShowAlert(true);
+      alertMessage.current = "Last topic has been reached";
     }
   };
 
   const handlePrevious = () => {
     index > topics.length - topics.length
       ? setIndex((i) => i - 1)
-      : alert("First card reached");
+      : setIsShowAlert(true);
+    alertMessage.current = "Last topic has been reached";
   };
 
   const handleDelete = (id) => {
     //delete the card from the database
-
-    const answer = prompt(
-      "You are about to delete the Topic with all its related cards , Would you like to proceed",
-    )
-      .toLowerCase()
-      .toString();
-    if (answer !== "yes") {
-      return null;
-    }
     (async () => {
       try {
-        const response = await fetch(
-          `${PORT.current}/topics/manageTopics/${id}`,
-          {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-          },
-        );
+        const response = await fetch(`${PORT}/topics/manageTopics/${id}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
         if (response.ok) {
           const responseData = await response.json();
           getTopics();
-          alert(responseData.message);
+
+          //alert popup
+          setIsShowAlert(true);
+          alertMessage.current = responseData.message;
+
+          //prevent undefined display from deleting last card
+          index > topics.length - topics.length ? setIndex((i) => i - 1) : null;
+
+          //removeQuestion Popup
+          setIsShowDeleteAlert(false);
         }
       } catch (err) {
         console.error(err, "Someting Went Wrong");
@@ -87,6 +91,30 @@ export default function HomeTopicManage() {
     <>
       <div className={css.App_container}>
         <NavBar btnName="/ManageTopic" />
+        {isShowAlert ? (
+          <Alert
+            message={alertMessage.current}
+            isInformation={true}
+            close={() => {
+              setIsShowAlert(false);
+            }}
+          />
+        ) : null}
+        {/* Are you sure Delete ? , alert pop up */}
+        {isShowDeleteAlert ? (
+          <Alert
+            message={"Are you sure , You want to delete"}
+            isQuestion={true}
+            returnTrue={() => {
+              //Yes , calls handleDelete function
+              handleDelete(displayTopics.topicId);
+            }}
+            returnFalse={() => {
+              //No , Removes Popup
+              setIsShowDeleteAlert(false);
+            }}
+          />
+        ) : null}
         {/* prevent rendering undefined data */}
         {topics.length ? (
           <>
@@ -135,7 +163,7 @@ export default function HomeTopicManage() {
                 </Link>
                 <button
                   className={css.manageBtns}
-                  onClick={() => handleDelete(displayTopics.topicId)}
+                  onClick={() => setIsShowDeleteAlert(true)}
                 >
                   Delete
                   <FontAwesomeIcon icon={faFileCircleXmark} />
@@ -151,13 +179,21 @@ export default function HomeTopicManage() {
                 <p>There no topics avalaible , Please Add topics</p>
               </div>
             </div>
-            <div className={css.align_display}>
-              <Link to={"/"}>
-                <button>Home</button>
+            <div className={css.align_display_btns}>
+              <Link to={"/"} className={css.Link}>
+                <button className={`${css.returnBtn} ${css.manageBtns}`}>
+                  Home
+                  <FontAwesomeIcon icon={faHome} />
+                </button>
               </Link>
-              <Link to={`/AddTopic`}>
-                <button>Add Topic</button>
-              </Link>
+              <div className={css.manageBtns_arrange}>
+                <Link className={css.link} to={`/AddTopic`}>
+                  <button className={css.manageBtns}>
+                    Add
+                    <FontAwesomeIcon icon={faFileCirclePlus} />
+                  </button>
+                </Link>
+              </div>
             </div>
           </>
         )}

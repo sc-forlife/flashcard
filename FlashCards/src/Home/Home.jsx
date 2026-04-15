@@ -1,6 +1,8 @@
 import css from "../ManageCards/manageCards.module.css";
 import cssHome from "./home.module.css";
 import NavBar from "../NavBar/NavBar";
+import Alert from "../alert/alert";
+import { useState } from "react";
 
 export default function home() {
   return (
