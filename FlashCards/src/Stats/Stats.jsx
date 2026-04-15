@@ -44,7 +44,7 @@ export default function Stats() {
             }}
           />
         ) : null}
-        <div className={css.card_display}>
+        <div className={css.card_display} style={{ overflowY: "scroll" }}>
           <h2 className={css.title}>Select topic to view stats</h2>
           {topics.map((topics) => {
             //Prevent mapping JSX to escape the unique key prop error

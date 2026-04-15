@@ -44,7 +44,7 @@ export default function ReviceCards() {
             }}
           />
         ) : null}
-        <div className={css.card_display}>
+        <div className={css.card_display} style={{ overflowY: "scroll" }}>
           <h2 className={css.title}>Select topic to revise</h2>
           {topics.map((topic) => {
             //Prevent mapping JSX to escape the unique key prop error

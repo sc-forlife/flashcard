@@ -2,10 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import css from "./alert.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCircle,
   faCircleInfo,
   faCircleQuestion,
-  faHome,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 
