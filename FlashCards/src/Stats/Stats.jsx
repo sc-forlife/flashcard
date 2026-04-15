@@ -1,16 +1,19 @@
 //This file has been logic checked and commented
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import css from "../ManageCards/manageCards.module.css";
 import Nav from "../NavBar/NavBar";
 import { userCards } from "../App";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import Alert from "../alert/alert";
 
 export default function Stats() {
   const PORT = useContext(userCards);
   const [topics, setTopics] = useState([{}]);
+  const [isShowAlert, setIsShowAlert] = useState(false);
+  let alertMessage = useRef("");
 
   const getTopics = async () => {
     try {
@@ -32,6 +35,15 @@ export default function Stats() {
     <>
       <div className={css.App_container}>
         <Nav btnName="/Stats" />
+        {isShowAlert ? (
+          <Alert
+            message={alertMessage.current}
+            isWarning={true}
+            close={() => {
+              setIsShowAlert(false);
+            }}
+          />
+        ) : null}
         <div className={css.card_display}>
           <h2 className={css.title}>Select topic to view stats</h2>
           {topics.map((topics) => {
@@ -48,7 +60,10 @@ export default function Stats() {
               </div>
             ) : (
               <div
-                onClick={() => alert(`${topics.topic} has no accessible cards`)}
+                onClick={() => {
+                  alertMessage.current = `${topics.topic} has no accessible cards`;
+                  setIsShowAlert(true);
+                }}
                 className={css.topic_container}
                 key={topics.topicId}
               >
