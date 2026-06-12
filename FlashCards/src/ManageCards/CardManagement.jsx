@@ -1,12 +1,13 @@
 //This file has been logic checked and commented
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import css from "./manageCards.module.css";
 import { useContext } from "react";
 import { userCards } from "../App";
 import Nav from "../NavBar/NavBar";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Alert from "../alert/alert";
 import {
   faFolderOpen,
   faFileCircleXmark,
@@ -22,7 +23,12 @@ export default function CardManagement() {
   const [hasCards, setHasCards] = useState(false);
   const [index, setIndex] = useState(0);
   const [cards, setCards] = useState([{}]);
+  const [isShowAlert, setIsShowAlert] = useState(false);
+  const [isShowDeleteAlert, setIsShowDeleteAlert] = useState(false);
+  const [isShowInformationAlert, setIsShowInformationAlert] = useState(false);
   let displayCard = cards[index];
+  let alertMessage = useRef("");
+  let informationAlertMessage = useRef("");
 
   const getCards = async () => {
     try {
@@ -56,7 +62,8 @@ export default function CardManagement() {
     if (index < cards.length - 1) {
       setIndex((i) => i + 1);
     } else {
-      alert("Last card reached");
+      setIsShowAlert(true);
+      alertMessage.current = "Last card has been reached";
     }
   };
 
@@ -65,21 +72,13 @@ export default function CardManagement() {
     if (index > cards.length - cards.length) {
       setIndex((i) => i - 1);
     } else {
-      alert("First card reached");
+      setIsShowAlert(true);
+      alertMessage.current = "First card has been reached";
     }
   };
 
   const handleDelete = (id) => {
     //delete the card from the database
-
-    const answer = prompt(`Are you want to delete card ${id}`)
-      .toLowerCase()
-      .toString();
-
-    //if user does not say yes , stop function
-    if (answer !== "yes") {
-      return null;
-    }
     (async () => {
       try {
         const response = await fetch(
@@ -93,7 +92,17 @@ export default function CardManagement() {
         if (response.ok) {
           const responseData = await response.json();
           getCards();
-          alert(responseData.message);
+
+          //alert popup
+          informationAlertMessage.current = responseData.message;
+          setIsShowInformationAlert(true);
+          console.log(responseData.message);
+
+          //prevent undefined display from deleting last card
+          index > cards.length - cards.length ? setIndex((i) => i - 1) : null;
+
+          //removeQuestion Popup
+          setIsShowDeleteAlert(false);
         }
       } catch (err) {
         console.error(err, "Something Went Wrong");
@@ -105,6 +114,39 @@ export default function CardManagement() {
     <>
       <div className={css.App_container}>
         <Nav btnName="/Cards" />
+        {isShowAlert ? (
+          <Alert
+            message={alertMessage.current}
+            isWarning={true}
+            close={() => {
+              setIsShowAlert(false);
+            }}
+          />
+        ) : null}
+        {isShowInformationAlert ? (
+          <Alert
+            message={informationAlertMessage.current}
+            isInformation={true}
+            close={() => {
+              setIsShowInformationAlert(false);
+            }}
+          />
+        ) : null}
+        {/* Are you sure Delete ? , alert pop up */}
+        {isShowDeleteAlert ? (
+          <Alert
+            message={"Are you sure , You want to delete"}
+            isQuestion={true}
+            returnTrue={() => {
+              //Yes , calls handleDelete function
+              handleDelete(displayCard.cardId);
+            }}
+            returnFalse={() => {
+              //No , Removes Popup
+              setIsShowDeleteAlert(false);
+            }}
+          />
+        ) : null}
         {/* Check if the database has cardData */}
         {hasCards ? (
           // Check if displayCard has cardData
@@ -162,7 +204,7 @@ export default function CardManagement() {
                   </Link>
                   <button
                     className={css.manageBtns}
-                    onClick={() => handleDelete(displayCard.cardId)}
+                    onClick={() => setIsShowDeleteAlert(true)}
                   >
                     Delete
                     <FontAwesomeIcon icon={faFileCircleXmark} />

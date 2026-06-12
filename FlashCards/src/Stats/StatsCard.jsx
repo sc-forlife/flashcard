@@ -1,6 +1,6 @@
 //This file has been logic checked and commented
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import css from "../ManageCards/manageCards.module.css";
 import { Link, useParams } from "react-router-dom";
 import { useContext } from "react";
@@ -12,12 +12,16 @@ import {
   faCircleArrowRight,
   faCircleArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import Alert from "../alert/alert";
 
 export default function StatsCard() {
   const PORT = useContext(userCards);
   const topic_id = useParams(); // object {id}
   const [cards, setCards] = useState([]);
   const [index, setIndex] = useState(0);
+  const [isShowAlert, setIsShowAlert] = useState("");
+  let alertMessage = useRef("");
+
   let displayCard = cards[index];
 
   const getCards = async () => {
@@ -40,14 +44,16 @@ export default function StatsCard() {
     if (index < cards.length - 1) {
       setIndex((i) => i + 1);
     } else {
-      alert("Last card reached");
+      setIsShowAlert(true);
+      alertMessage.current = "Last topic has been reached";
     }
   };
 
   const handlePrevious = () => {
     index > cards.length - cards.length
       ? setIndex((i) => i - 1)
-      : alert("First card reached");
+      : setIsShowAlert(true);
+    alertMessage.current = "First topic has been reached";
   };
 
   //Get the rataining rate
@@ -64,6 +70,15 @@ export default function StatsCard() {
     <>
       <div className={css.App_container}>
         <NavBar btnName="/Stats" />
+        {isShowAlert ? (
+          <Alert
+            message={alertMessage.current}
+            isWarning={true}
+            close={() => {
+              setIsShowAlert(false);
+            }}
+          />
+        ) : null}
         {/*Prevent render of undefined displayCard */}
         {displayCard ? (
           <>

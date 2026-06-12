@@ -34,7 +34,7 @@ export default function Home() {
     <>
       <div className={css.App_container}>
         <Nav btnName="/Cards" />
-        <div className={css.card_display}>
+        <div className={css.card_display} style={{ overflowY: "scroll" }}>
           <h1 className={css.title}>Topics</h1>
           {/* Display add message and add button if no cards are found*/}
           {topics.length !== 0 ? (
